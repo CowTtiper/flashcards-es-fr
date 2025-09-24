@@ -129,7 +129,7 @@ let words = [
     { es: "Gritar", fr: ["Crier"] },
     { es: "Guarra (FAM)", fr: ["Salope"] },
     { es: "Gilipollas (FAM) (2)", fr: ["Stupide", "Idiote"] },
-    { es: "Golpear (4)", fr: ["Frapper", "Golpe : coup", "toquer"] },
+    { es: "Golpear (2)", fr: ["Frapper", "toquer"] },
     { es: "Guagua", fr: ["Autobus (AM)"] },
     { es: "Gemelo", fr: ["Jumeau", "Mollet"] },
     { es: "Herida", fr: ["Blessure"] },
@@ -143,13 +143,15 @@ let words = [
     { es: "Juzgar", fr: ["Juger"] },
     { es: "Juntos", fr: ["Ensemble"] },
     { es: "Ligar", fr: ["Flirter"] },
+    { es: "Ligarse", fr: ["Draguer"] },
+    { es: "Liarse (FAM)", fr: ["Chopper"] },
     { es: "Ladrón", fr: ["Voleur"] },
-    { es: "Lograr", fr: ["Atteindre", "Réaliser"] },
+    { es: "Lograr (2)", fr: ["Atteindre", "Réaliser"] },
     { es: "Llave", fr: ["Clé"] },
     { es: "Lleno", fr: ["Plein"] },
     { es: "Madera", fr: ["Bois"] },
     { es: "Mezclar", fr: ["Mélanger"] },
-    { es: "Mojar (FAM)", fr: ["Mouiller"] },
+    { es: "Mojar", fr: ["Mouiller"] },
     { es: "Monas (FAM) (2)", fr: ["Sexy", "Belle"] },
     { es: "Montón (2)", fr: ["Un tas", "Beaucoup"] },
     { es: "Merecer", fr: ["Mériter"] },
@@ -157,7 +159,7 @@ let words = [
     { es: "Mitad", fr: ["Moitié"] },
     { es: "Mandar (2)", fr: ["Envoyer", "Ordonner"] },
     { es: "Mear", fr: ["Pisser"] },
-    { es: "Muñeca", fr: ["Poignet"] },
+    { es: "Muñeca (2)", fr: ["Poignet", "Poupée"] },
     { es: "Noticias", fr: ["Nouvelles"] },
     { es: "Nadar", fr: ["Nager"] },
     { es: "Núcleo", fr: ["Centre-ville"] },
@@ -175,8 +177,9 @@ let words = [
     { es: "Palomitas", fr: ["Popcorn"] },
     { es: "El paro", fr: ["Sans emploi"] },
     { es: "Pelas (FAM)", fr: ["Argent"] },
-    { es: "Pelear", fr: ["Éplucher", "Se battre"] },
-    { es: "Una paliza", fr: ["Une branler"] },
+    { es: "Pelar ", fr: ["Éplucher"] },
+    { es: "Pelearse (2)", fr: [ "Se battre, Se disputer"] },
+    { es: "Una paliza", fr: ["Une branlette"] },
     { es: "Paso", fr: ["Un pas"] },
     { es: "Pesadilla", fr: ["Cauchemar"] },
     { es: "Probar (3)", fr: ["Essayer", "Tenter", "Goûter"] },
@@ -273,6 +276,14 @@ function showCard() {
         <span class="tooltiptext">${word.fr.join(" / ")}</span>
       </span>
     `;
+        // Détecte mobile et ajoute clic pour afficher la traduction
+    if (window.matchMedia("(hover: none) and (pointer: coarse)").matches) {
+        const tooltip = document.querySelector(".tooltip");
+        tooltip.addEventListener("click", () => {
+            tooltip.classList.toggle("show");
+        });
+}
+
 
     const tooltip = document.querySelector(".tooltip");
     const tooltipText = tooltip.querySelector(".tooltiptext");
