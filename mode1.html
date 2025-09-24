@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flashcards FR ⇄ ES</title>
+<h2> 
+COL -> Coloquial <br>
+
+FAM -> Familier  <br>
+
+D -> Diphtongue  </h2>
+<link rel="stylesheet" href="style.css">
+<button onclick="window.location='index.html'">Page d'accueil</button>
+</head>
+<body>  
+<h2>Flashcards FR ⇄ ES</h2>
+<div id="card"></div>
+<input type="text" id="answer" placeholder="Traduction">
+<button onclick="checkAnswer()">Vérifier</button>
+<div id="feedback"></div>
+
+<script>
+
+       
+let words = [
+    { es: "Almuerzo", fr: ["Déjeuner"] },
+    { es: "Actuar", fr: ["Agir"] },
+    { es: "Aprobar (2)", fr: ["Réussir", "Approuver"] },
+    { es: "Agobiar", fr: ["Stresser"] },
+    { es: "Agotar", fr: ["Fatiguer"] },
+    { es: "Apuesta", fr: ["Parier", "Défi"] },
+    { es: "Acabar", fr: ["Finir"] },
+    { es: "Amedrentar", fr: ["Intimider"] },
+    { es: "Agradar", fr: ["Faire plaisir", "Plaire"] },
+    { es: "Andar", fr: ["Marcher"] },
+    { es: "Apretar (3)", fr: ["Serrer", "Presser", "Se dépêcher"] },
+    { es: "Apuñalar", fr: ["Poignarder"] },
+    { es: "Altura", fr: ["Hauteur"] },
+    { es: "Aislarse", fr: ["S’isoler"] },
+    { es: "Ampliar", fr: ["Agrandir", "Étendre"] },
+    { es: "Apretar (D) (3°)", fr: ["Presser", "Faire vite", "Serrer"] },
+    { es: "Anfitrión", fr: ["Personne qui reçoit des invités chez soi"] },
+    { es: "Ahogarse", fr: ["Se noyer"] },
+    { es: "Aguantar", fr: ["Supporter"] },
+    { es: "Aprovechar", fr: ["Profiter"] },
+    { es: "Acostarse", fr: ["Se coucher"] },
+    { es: "Atropellarse", fr: ["Se renverser"] },
+    { es: "Arrepentirse", fr: ["Regretter"] },
+    { es: "Aposento", fr: ["Auberge"] },
+    { es: "Azotea", fr: ["Terrasse"] },
+    { es: "Aula", fr: ["Salle de classe"] },
+    { es: "Bragas", fr: ["Culottes"] },
+    { es: "Bonita / Buenota", fr: ["Belle"] },
+    { es: "Bajar", fr: ["Descendre"] },
+    { es: "Boba (FAM)", fr: ["Idiote"] },
+    { es: "Basura", fr: ["Ordure"] },
+    { es: "Bojar", fr: ["Supprimer"] },
+    { es: "Boda", fr: ["Mariage"] },
+    { es: "Becado", fr: ["Boursier"] },
+    { es: "Bicho", fr: ["Créature", "Insecte"] },
+    { es: "Bodegas", fr: ["Caves (Vin)"] },
+    { es: "Bellaco", fr: ["Voyou"] },
+    { es: "Bruja", fr: ["Sorcière"] },
+    { es: "Bajón", fr: ["Déprime"] },
+    { es: "Conejo", fr: ["Lapin"] },
+    { es: "Chungo (COL)", fr: ["Difficile", "Compliqué"] },
+    { es: "Chupitos", fr: ["Shots"] },
+    { es: "Castigar", fr: ["Punir"] },
+    { es: "Capullo (FAM)", fr: ["Con"] },
+    { es: "Cara", fr: ["Tête"] },
+    { es: "Camello (FAM)", fr: ["Dealer", "Chameau"] },
+    { es: "Cansar", fr: ["Fatiguer"] },
+    { es: "Chillar", fr: ["Crier"] },
+    { es: "Chaval", fr: ["Gamin"] },
+    { es: "Celoso", fr: ["Jaloux"] },
+    { es: "Cobrar (2)", fr: ["Encaisser", "Gagner"] },
+    { es: "Cenar", fr: ["Dîner"] },
+    { es: "Casarse", fr: ["Se marier"] },
+    { es: "Chiste", fr: ["Blague"] },
+    { es: "Carear", fr: ["Confronter"] },
+    { es: "Cria (2)", fr: ["Enfant", "Gamine"] },
+    { es: "Chulo (2)", fr: ["Super", "Chouette"] },
+    { es: "Cogín", fr: ["Coussin"] },
+    { es: "Contestar", fr: ["Répondre"] },
+    { es: "Unos currillos", fr: ["Travaux ou petites tâches"] },
+    { es: "Comprobar", fr: ["Vérifier"] },
+    { es: "Currar (COL)", fr: ["Travailler"] },
+    { es: "Colarse (2)", fr: ["S’infiltrer", "Être amoureux fou"] },
+    { es: "Cabezadita", fr: ["Petite sieste"] },
+    { es: "Cabreado", fr: ["En colère", "Fâché"] },
+    { es: "Cita", fr: ["Rendez-vous"] },
+    { es: "Conseguir (2)", fr: ["Obtenir", "Réussir"] },
+    { es: "Colocarse (2)", fr: ["Se droguer", "Se trouver"] },
+    { es: "Carné", fr: ["Carte"] },
+    { es: "Caja", fr: ["Boîte"] },
+    { es: "Caber", fr: ["Rentrer"] },
+    { es: "Cuyo/a", fr: ["Dont"] },
+    { es: "Colmillo", fr: ["Canine"] },
+    { es: "Canjear", fr: ["Échanger"] },
+    { es: "Distinto", fr: ["Différent"] },
+    { es: "Depilarse", fr: ["Se raser"] },
+    { es: "Delatar", fr: ["Dénoncer"] },
+    { es: "Dispuesto", fr: ["Prêt"] },
+    { es: "Estampilla", fr: ["Timbre"] },
+    { es: "Entrevista (2)", fr: ["Entretien", "Interview"] },
+    { es: "Esperar", fr: ["Attendre"] },
+    { es: "Enterarse (3)", fr: ["Comprendre", "Réaliser", "Acquérir connaissances"] },
+    { es: "Esconder", fr: ["Cacher"] },
+    { es: "Engañar", fr: ["Tromper"] },
+    { es: "Echar (2)", fr: ["Mettre", "Jeter"] },
+    { es: "Empujar", fr: ["Pousser"] },
+    { es: "Espalda", fr: ["Dos"] },
+    { es: "Equivocarse", fr: ["Se tromper"] },
+    { es: "Empeñar", fr: ["Insister"] },
+    { es: "Enganchar", fr: ["Devenir addict"] },
+    { es: "Escoger", fr: ["Choisir"] },
+    { es: "Espejismo", fr: ["Mirage"] },
+    { es: "Exito", fr: ["Gloire", "Fama"] },
+    { es: "La envidia", fr: ["Jalousie"] },
+    { es: "Espuma", fr: ["Mousse"] },
+    { es: "Estorbo (4)", fr: ["Frein", "Gêne", "Obstacle", "Golmon"] },
+    { es: "Escalón", fr: ["Marche"] },
+    { es: "Follar (FAM)", fr: ["Baiser"] },
+    { es: "Fiar", fr: ["Faire confiance"] },
+    { es: "Fuera", fr: ["Dehors"] },
+    { es: "Finca", fr: ["Ferme"] },
+    { es: "Firmar", fr: ["Signer"] },
+    { es: "Gritar", fr: ["Crier"] },
+    { es: "Guarra (FAM)", fr: ["Salope"] },
+    { es: "Gilipollas (FAM) (2)", fr: ["Stupide", "Idiote"] },
+    { es: "Golpear (4)", fr: ["Frapper", "Golpe : coup", "toquer"] },
+    { es: "Guagua", fr: ["Autobus (AM)"] },
+    { es: "Gemelo", fr: ["Jumeau", "Mollet"] },
+    { es: "Herida", fr: ["Blessure"] },
+    { es: "Harto", fr: ["En avoir assez"] },
+    { es: "Hueco (3)", fr: ["Place", "Creux", "Trou"] },
+    { es: "Humo", fr: ["Fumée"] },
+    { es: "Hielo", fr: ["Glaçon"] },
+    { es: "Huella", fr: ["Trace", "Empreinte"] },
+    { es: "Hallar", fr: ["Trouver", "Découvrir"] },
+    { es: "Impedir", fr: ["Empêcher"] },
+    { es: "Juzgar", fr: ["Juger"] },
+    { es: "Juntos", fr: ["Ensemble"] },
+    { es: "Ligar", fr: ["Flirter"] },
+    { es: "Ladrón", fr: ["Voleur"] },
+    { es: "Lograr", fr: ["Atteindre", "Réaliser"] },
+    { es: "Llave", fr: ["Clé"] },
+    { es: "Lleno", fr: ["Plein"] },
+    { es: "Madera", fr: ["Bois"] },
+    { es: "Mezclar", fr: ["Mélanger"] },
+    { es: "Mojar (FAM)", fr: ["Mouiller"] },
+    { es: "Monas (FAM) (2)", fr: ["Sexy", "Belle"] },
+    { es: "Montón (2)", fr: ["Un tas", "Beaucoup"] },
+    { es: "Merecer", fr: ["Mériter"] },
+    { es: "Movidas (2)", fr: ["Façons", "Situations"] },
+    { es: "Mitad", fr: ["Moitié"] },
+    { es: "Mandar (2)", fr: ["Envoyer", "Ordonner"] },
+    { es: "Mear", fr: ["Pisser"] },
+    { es: "Muñeca", fr: ["Poignet"] },
+    { es: "Noticias", fr: ["Nouvelles"] },
+    { es: "Nadar", fr: ["Nager"] },
+    { es: "Núcleo", fr: ["Centre-ville"] },
+    { es: "Ocultar (2)", fr: ["Cacher", "Dissimuler"] },
+    { es: "Ojalá", fr: ["J’espère"] },
+    { es: "Orgulloso", fr: ["Fier"] },
+    { es: "Ojito (EX)", fr: ["Attention"] },
+    { es: "Olas", fr: ["Vagues"] },
+    { es: "Parar", fr: ["Arrêter"] },
+    { es: "Pillar (MS)", fr: ["Attraper 🔥"] },
+    { es: "Pivas / Pivitas (FAM)", fr: ["Meuf"] },
+    { es: "Pañuelo", fr: ["Foulard"] },
+    { es: "Pavos (FAM)", fr: ["Tune"] },
+    { es: "Pavo", fr: ["Gars"] },
+    { es: "Palomitas", fr: ["Popcorn"] },
+    { es: "El paro", fr: ["Sans emploi"] },
+    { es: "Pelas (FAM)", fr: ["Argent"] },
+    { es: "Pelear", fr: ["Éplucher", "Se battre"] },
+    { es: "Una paliza", fr: ["Une branler"] },
+    { es: "Paso", fr: ["Un pas"] },
+    { es: "Pesadilla", fr: ["Cauchemar"] },
+    { es: "Probar (3)", fr: ["Essayer", "Tenter", "Goûter"] },
+    { es: "Polvo (FAM) (2)", fr: ["Poussière", "Sexe"] },
+    { es: "Popola", fr: ["Vagin"] },
+    { es: "Pirarse (2)", fr: ["S’en aller", "Dégager"] },
+    { es: "Pereza", fr: ["Paresse"] },
+    { es: "La palma", fr: ["Mourir"] },
+    { es: "Preso", fr: ["Prisonnier"] },
+    { es: "Pesado (2)", fr: ["Fastidieux", "Ennuyeux"] },
+    { es: "Pajear (FAM)", fr: ["Masturbation"] },
+    { es: "Peña", fr: ["Groupe", "Club"] },
+    { es: "Pastizal", fr: ["Prairie", "Tas d’argent"] },
+    { es: "Quemar", fr: ["Brûler"] },
+    { es: "Repetir", fr: ["Redoubler"] },
+    { es: "Un Rato", fr: ["Un moment"] },
+    { es: "Rezar", fr: ["Prier"] },
+    { es: "Rayar", fr: ["Stresser"] },
+    { es: "Reto", fr: ["Challenge", "Défi"] },
+    { es: "Rehusar", fr: ["Refuser", "Éviter"] },
+    { es: "Retrato", fr: ["Représentation visuelle ou descriptive de quelqu’un"] },
+    { es: "Rabo", fr: ["Queue"] },
+    { es: "Rastro", fr: ["Trace"] },
+    { es: "Rifa", fr: ["Tombola"] },
+    { es: "Subir", fr: ["Monter"] },
+    { es: "Soltar", fr: ["Libérer", "Relâcher"] },
+    { es: "Susto", fr: ["Peur"] },
+    { es: "Secar", fr: ["Sécher"] },
+    { es: "Segurata", fr: ["Sécurité"] },
+    { es: "Siroco", fr: ["Une crise de folie"] },
+    { es: "Subidón", fr: ["Montée d’adrénaline"] },
+    { es: "Sobrar", fr: ["Être en excès"] },
+    { es: "Sesera", fr: ["Crâne", "Tête"] },
+    { es: "Tomar", fr: ["Prendre", "Boire"] },
+    { es: "Tonta", fr: ["Stupide"] },
+    { es: "Tarado", fr: ["Con"] },
+    { es: "Temprano", fr: ["Tôt"] },
+    { es: "Techo", fr: ["Toit"] },
+    { es: "Trampa", fr: ["Piège"] },
+    { es: "Trullo (FAM)", fr: ["Taule", "Prison"] },
+    { es: "Temer", fr: ["Craindre"] },
+    { es: "Trapicheo / Trapis", fr: ["Trafic", "Petit trafic"] },
+    { es: "Tordre", fr: ["Tourner (expression)"] },
+    { es: "Valqueros", fr: ["Jeans"] },
+    { es: "Veranear", fr: ["Passer l’été"] },
+    { es: "Zorras (FAM)", fr: ["Putes", "Salopes"] },
+    { es: "EvAU", fr: ["Évaluation d’Accès à l’Université"] },
+    { es: "Joder (FAM)", fr: ["Casse les couilles", "C’est chiant"] },
+    { es: "Ni de coña", fr: ["Jamais de la vie"] },
+    { es: "Me mola / Me encanta / Me gusta", fr: ["J’aime", "Ça me plaît"] },
+    { es: "Que se joda", fr: ["C’est de leur faute", "Peu importe"] },
+    { es: "Da la vuelta", fr: ["Fais un tour (sur soi-même)"] },
+    { es: "Lo siento", fr: ["Je suis désolé"] },
+    { es: "No me jodas", fr: ["Ne me fais pas chier"] },
+    { es: "Estáis de broma / de coña / Estáis bromeando", fr: ["Vous plaisantez"] },
+    { es: "Por si acaso", fr: ["Au cas où"] },
+    { es: "De hecho", fr: ["En fait"] },
+    { es: "Por casualidad", fr: ["Par hasard"] },
+    { es: "Me lo monto", fr: ["Je le fais (relation / aventure)"] },
+    { es: "Es un placer conocerte", fr: ["Un plaisir de te rencontrer", "Enchanté"] },
+    { es: "No te rayes", fr: ["Ne t’inquiète pas", "Ne te prends pas la tête"] },
+    { es: "Es eso cierto", fr: ["C’est vrai ?"] },
+    { es: "Te echo de menos", fr: ["Tu me manques"] },
+    { es: "Mucho gusto", fr: ["Enchanté"] },
+    { es: "Poner los cuernos", fr: ["Être infidèle"] },
+    { es: "Hoy se parcha", fr: ["Passer un bon moment avec des amis"] },
+    { es: "Ponte cómoda", fr: ["Mets-toi à l’aise"] },
+    { es: "Que Mono/a", fr: ["Pour dire qu’une personne est très jolie ou gentille"] },
+    { es: "Dar un paso", fr: ["Prendre une décision (projet, relation…)"] },
+    { es: "Al grano", fr: ["Parler du sujet principal"] },
+    { es: "En plan", fr: ["Une explication / Exemple : je vais à la fête, en plan m’amuser"] }
+];
+
+let currentIndex;
+
+
+// Fonction pour normaliser les accents et minuscules
+function normalize(str) {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+
+// Affiche un mot aléatoire
+function showCard() {
+    if (words.length === 0) {
+        document.getElementById("card").textContent = "🎉 Tous les mots sont appris !";
+        return;
+    }
+    currentIndex = Math.floor(Math.random() * words.length);
+    let word = words[currentIndex];
+    // 👉 On affiche le français (une des traductions possibles)
+    document.getElementById("card").textContent = word.fr.join(" / ");
+}
+
+
+
+// Vérifie la réponse de l'utilisateur
+function checkAnswer() {
+    if (words.length === 0) return;
+
+    let user = normalize(document.getElementById("answer").value.trim());
+    let correct = [words[currentIndex].es];  // ✅ Réponse attendue en espagnol
+    let isCorrect = correct.some(c => normalize(c) === user);
+
+    if (isCorrect) {
+        document.getElementById("feedback").textContent = "✅ Bravo !";
+        words.splice(currentIndex, 1); // Supprime le mot correctement répondu
+    } else {
+        document.getElementById("feedback").textContent = "❌ Mauvaise réponse";
+    }
+
+    document.getElementById("answer").value = "";
+    showCard();
+}
+
+// Initialisation
+showCard();
+</script>
+</body>
+</html>
