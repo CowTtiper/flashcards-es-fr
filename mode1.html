@@ -267,15 +267,25 @@ function showCard() {
     currentIndex = Math.floor(Math.random() * words.length);
     let word = words[currentIndex];
     
-    // 👉 Le français affiché en gros
-    // 👉 L'espagnol caché dans la bulle, révélé au survol
     document.getElementById("card").innerHTML = `
       <span class="tooltip">
-        ${word.fr.join(" / ")}
-        <span class="tooltiptext">${word.es}</span>
+        ${word.es}
+        <span class="tooltiptext">${word.fr.join(" / ")}</span>
       </span>
     `;
+
+    const tooltip = document.querySelector(".tooltip");
+    const tooltipText = tooltip.querySelector(".tooltiptext");
+
+    tooltip.addEventListener("click", () => {
+        if (tooltipText.style.display === "block") {
+            tooltipText.style.display = "none";
+        } else {
+            tooltipText.style.display = "block";
+        }
+    });
 }
+
 
 
 

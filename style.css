@@ -37,8 +37,16 @@ button {
   font-weight: bold;
 }
 
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
 .tooltip .tooltiptext {
-  visibility: hidden;   /* caché par défaut */
+  display: none; /* caché par défaut */
   width: auto;
   background-color: #333;
   color: #fff;
@@ -46,19 +54,12 @@ button {
   border-radius: 6px;
   position: absolute;
   z-index: 1;
-  bottom: -2rem;        /* placé sous le mot */
+  bottom: -2rem;
   left: 50%;
   transform: translateX(-50%);
-  opacity: 0;           /* invisible au départ */
-  transition: opacity 0.3s; /* effet fondu */
   font-size: 1rem;
 }
 
-/* Quand on survole le mot → affiche la traduction */
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-  opacity: 1;
-}
 
 #feedback {
     margin-top: 10px;
