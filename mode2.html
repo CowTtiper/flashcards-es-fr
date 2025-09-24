@@ -268,8 +268,16 @@ function showCard() {
     }
     currentIndex = Math.floor(Math.random() * words.length);
     let word = words[currentIndex];
-    document.getElementById("card").textContent = showSpanish ? word.es : word.fr.join(" / ");
+    
+    // Espagnol visible, français caché dans la bulle
+    document.getElementById("card").innerHTML = `
+      <span class="tooltip">
+        ${word.es}
+        <span class="tooltiptext">${word.fr.join(" / ")}</span>
+      </span>
+    `;
 }
+
 
 // Vérifie la réponse de l'utilisateur
 function checkAnswer() {

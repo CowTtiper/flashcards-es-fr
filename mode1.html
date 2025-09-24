@@ -266,9 +266,17 @@ function showCard() {
     }
     currentIndex = Math.floor(Math.random() * words.length);
     let word = words[currentIndex];
-    // 👉 On affiche le français (une des traductions possibles)
-    document.getElementById("card").textContent = word.fr.join(" / ");
+    
+    // 👉 Le français affiché en gros
+    // 👉 L'espagnol caché dans la bulle, révélé au survol
+    document.getElementById("card").innerHTML = `
+      <span class="tooltip">
+        ${word.fr.join(" / ")}
+        <span class="tooltiptext">${word.es}</span>
+      </span>
+    `;
 }
+
 
 
 
