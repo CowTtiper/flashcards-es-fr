@@ -1,19 +1,33 @@
 
 body {
-    font-family: sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f6d365, #fda085); /* Dégradé doux */
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     height: 100vh;
     margin: 0;
-    background: #f4f4f9;
-    text-align: center; /* centre tout le texte */
-    
-}
+        font-size: 30px;
+    }
 button {
-    padding: 10px 20px;
-    font-size: 1rem;
-    margin: 5px;
+background-color: #fda085;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: transform 0.2s;
+  margin : 5px;
 }
+h1 {
+    
 
+    color: black;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+  font-family: "Georgia", "Times New Roman", serif;
+}
