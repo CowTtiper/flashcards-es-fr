@@ -4,40 +4,38 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Flashcards FR ⇄ ES</title>
-<h2> 
-COL -> Coloquial <br>
-
-FAM -> Familier  <br>
-
-D -> Diphtongue  <br>
-
-AL-> America Latina</h2>
 <link rel="stylesheet" href="style.css">
-<button onclick="window.location='index.html'">Page d'accueil</button>
 </head>
 <body>  
 <h2>Flashcards FR ⇄ ES</h2>
+
+<label for="numWords">Nombre de mots à deviner :</label>
+<select id="numWords">
+  <option value="10">10</option>
+  <option value="20">20</option>
+  <option value="30">30</option>
+</select>
+<button id="startGame">Commencer</button>
+
 <div id="card"></div>
 
+<input type="text" id="answer" placeholder="Ta réponse ici" disabled>
+<button id="checkBtn" onclick="checkAnswer()" disabled>Vérifier</button>
 
+<div id="feedback"></div>
 
-<input type="text" id="answer" placeholder="Ta réponse ici">
-  <button onclick="checkAnswer()">Vérifier</button>
+<script>
+document.getElementById("answer").addEventListener("keypress", function(event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    checkAnswer();
+  }
+});
 
-  <div id="feedback"></div>
-
-  <script>
-    // ✅ Entrée = bouton
-    document.getElementById("answer").addEventListener("keypress", function(event) {
-      if (event.key === "Enter") {
-        event.preventDefault();
-        checkAnswer();
-      }
-    });
-
-       
+         
 let words = [
     { fr: "Déjeuner", es: ["Almuerzo"] },
+    { fr: "Se dépécher", es: ["Apurarse"] },
     { fr: "Agir", es: ["Actuar"] },
     { fr: "Réussir", es: ["Aprobar", "Conseguir"] },
     { fr: "Approuver", es: ["Aprobar"] },
@@ -53,7 +51,7 @@ let words = [
     { fr: "Marcher", es: ["Andar"] },
     { fr: "Serrer", es: ["Apretar"] },
     { fr: "Presser", es: ["Apretar"] },
-    { fr: "Se dépêcher", es: ["Apretar"] },
+    { fr: "Se dépêcher)", es: ["Apretar"] },
     { fr: "Poignarder", es: ["Apuñalar"] },
     { fr: "Hauteur", es: ["Altura"] },
     { fr: "S’isoler", es: ["Aislarse"] },
@@ -151,7 +149,7 @@ let words = [
     { fr: "Mousse", es: ["Espuma"] },
     { fr: "Frein, Obstacle", es: ["Estorbo"] },
     
-    { fr: "Golmon", es: ["Estorbo"] },
+    
     { fr: "Marche (Escalier)", es: ["Escalón"] },
     { fr: "Baiser", es: ["Follar "] },
     { fr: "Faire confiance", es: ["Fiar"] },
@@ -240,7 +238,7 @@ let words = [
     { fr: "Un moment", es: ["Un Rato"] },
     { fr: "Prier", es: ["Rezar"] },
     { fr: "Refuser", es: ["Rechazar"] },
-    { fr: "Éviter", es: ["Rechazar"] },
+
     { fr: "Challenge", es: ["Reto"] },
     { fr: "Représentation visuelle ou descriptive de quelqu’un", es: ["Retrato"] },
     { fr: "Queue", es: ["Rabo"] },
@@ -288,25 +286,50 @@ let words = [
     { fr: "Parler du sujet principal", es: ["Al grano"] },
     { fr: "Une explication / Exemple : je vais à la fête, en plan m’amuser", es: ["En plan"] },
 ];
+  
 
+let gameWords = [];
+let currentIndex = 0;
+let totalToGuess = 0;
 
-
-let currentIndex;
-
+// Normalisation pour comparer les réponses
 function normalize(str) {
   return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
 }
 
+// Désactiver le champ de réponse et le bouton au départ
+document.getElementById("answer").disabled = true;
+document.getElementById("checkBtn").disabled = true;
+
+// Bouton "Commencer"
+document.getElementById("startGame").addEventListener("click", () => {
+  totalToGuess = parseInt(document.getElementById("numWords").value);
+
+  // Mélanger et sélectionner les mots
+  let shuffled = [...words].sort(() => Math.random() - 0.5);
+  gameWords = shuffled.slice(0, totalToGuess);
+
+  document.getElementById("feedback").textContent = `🎯 ${totalToGuess} mots sélectionnés ! Commence à jouer.`;
+
+  // Activer input et bouton
+  document.getElementById("answer").disabled = false;
+  document.getElementById("checkBtn").disabled = false;
+
+  showCard();
+});
+
+// Affichage d’une carte
 function showCard() {
-  if (words.length === 0) {
-    document.getElementById("card").textContent = "🎉 Tous les mots sont appris !";
+  if (gameWords.length === 0) {
+    document.getElementById("card").textContent = "🎉 Tous les mots de votre sélection sont appris !";
+    document.getElementById("answer").disabled = true;
+    document.getElementById("checkBtn").disabled = true;
     return;
   }
 
-  currentIndex = Math.floor(Math.random() * words.length);
-  let word = words[currentIndex];
+  currentIndex = Math.floor(Math.random() * gameWords.length);
+  let word = gameWords[currentIndex];
 
-  // Préparer la traduction espagnole comme chaîne
   let spanishTranslation = Array.isArray(word.es) ? word.es.join(" / ") : word.es;
 
   document.getElementById("card").innerHTML = `
@@ -315,38 +338,27 @@ function showCard() {
       <span class="tooltiptext">${spanishTranslation}</span>
     </span>
   `;
-
-  // Détection mobile pour clic
-  const tooltip = document.querySelector(".tooltip");
-  if (window.matchMedia("(hover: none) and (pointer: coarse)").matches) {
-    tooltip.addEventListener("click", () => {
-      tooltip.classList.toggle("show");
-    });
-  }
 }
 
+// Vérification de la réponse
 function checkAnswer() {
-  if (words.length === 0) return;
+  if (gameWords.length === 0) return;
 
   let user = normalize(document.getElementById("answer").value.trim());
-  let correct = Array.isArray(words[currentIndex].es) ? words[currentIndex].es : [words[currentIndex].es];
+  let correct = Array.isArray(gameWords[currentIndex].es) ? gameWords[currentIndex].es : [gameWords[currentIndex].es];
 
   let isCorrect = correct.some(c => normalize(c) === user);
 
   if (isCorrect) {
     document.getElementById("feedback").textContent = "✅ Bravo !";
-    words.splice(currentIndex, 1);
+    gameWords.splice(currentIndex, 1);
   } else {
-    document.getElementById("feedback").textContent = "❌ Mauvaise réponse";
+    document.getElementById("feedback").textContent = `❌ Mauvaise réponse ! La bonne réponse : ${correct.join(" / ")}`;
   }
 
   document.getElementById("answer").value = "";
   showCard();
 }
-
-
-// Initialisation
-showCard();
 </script>
 </body>
 </html>

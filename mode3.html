@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flashcards FR ⇄ ES</title>
+<h2> 
+COL -> Coloquial <br>
+
+FAM -> Familier  <br>
+
+D -> Diphtongue  <br>
+
+AL-> America Latina</h2>
+<link rel="stylesheet" href="style.css">
+<button onclick="window.location='index.html'">Page d'accueil</button>
+</head>
+<body>  
+<h2>Flashcards FR ⇄ ES</h2>
+<div id="card"></div>
+
+
+
+<input type="text" id="answer" placeholder="Ta réponse ici">
+  <button onclick="checkAnswer()">Vérifier</button>
+
+  <div id="feedback"></div>
+
+  <script>
+    // ✅ Entrée = bouton
+    document.getElementById("answer").addEventListener("keypress", function(event) {
+      if (event.key === "Enter") {
+        event.preventDefault();
+        checkAnswer();
+      }
+    });
+
+       
+let words = [
+  { fr: "Être", es: ["ser", "estar"] },
+  { fr: "Avoir", es: ["tener"] },
+  { fr: "Aller", es: ["ir"] },
+  { fr: "Faire", es: ["hacer"] },
+  { fr: "Dire", es: ["decir"] },
+  { fr: "Pouvoir", es: ["poder"] },
+  { fr: "Vouloir", es: ["querer"] },
+  { fr: "Savoir", es: ["saber"] },
+  { fr: "Voir", es: ["ver"] },
+  { fr: "Venir", es: ["venir"] },
+  { fr: "Prendre", es: ["tomar"] },
+  { fr: "Mettre", es: ["poner"] },
+  { fr: "Parler", es: ["hablar"] },
+  { fr: "Aimer", es: ["amar", "gustar"] },
+  { fr: "Passer", es: ["pasar"] },
+  { fr: "Penser", es: ["pensar"] },
+  { fr: "Donner", es: ["dar"] },
+  { fr: "Trouver", es: ["encontrar"] },
+  { fr: "Demander", es: ["preguntar"] },
+  { fr: "Tenir", es: ["mantener", "sujetar"] },
+  { fr: "Sembler", es: ["parecer"] },
+  { fr: "Laisser", es: ["dejar"] },
+  { fr: "Rester", es: ["quedarse"] },
+  { fr: "Entendre", es: ["oír"] },
+  { fr: "Répondre", es: ["responder"] },
+  { fr: "Rendre", es: ["devolver", "hacer"] },
+  { fr: "Connaître", es: ["conocer"] },
+  { fr: "Vivre", es: ["vivir"] },
+  { fr: "Chercher", es: ["buscar"] },
+  { fr: "Comprendre", es: ["entender", "comprender"] },
+  { fr: "Apprendre", es: ["aprender"] },
+  { fr: "Sortir", es: ["salir"] },
+  { fr: "Entrer", es: ["entrar"] },
+  { fr: "Arriver", es: ["llegar"] },
+  { fr: "Partir", es: ["partir", "irse"] },
+  { fr: "Ouvrir", es: ["abrir"] },
+  { fr: "Fermer", es: ["cerrar"] },
+  { fr: "Jouer", es: ["jugar"] },
+  { fr: "Manger", es: ["comer"] },
+  { fr: "Boire", es: ["beber"] },
+  { fr: "Dormir", es: ["dormir"] },
+  { fr: "Écouter", es: ["escuchar"] },
+  { fr: "Regarder", es: ["mirar"] },
+  { fr: "Écrire", es: ["escribir"] },
+  { fr: "Lire", es: ["leer"] },
+  { fr: "Apporter", es: ["traer"] },
+  { fr: "Porter", es: ["llevar"] },
+  { fr: "Commencer", es: ["empezar", "comenzar"] },
+  { fr: "Finir", es: ["terminar", "acabar"] },
+  { fr: "Se lever", es: ["levantarse"] },
+  { fr: "S’asseoir", es: ["sentarse"] },
+  { fr: "Tomber", es: ["caer"] },
+  { fr: "Courir", es: ["correr"] },
+  { fr: "Marcher", es: ["andar", "caminar"] },
+  { fr: "Conduire", es: ["conducir"] },
+  { fr: "Applaudir", es: ["aplaudir"] },
+  { fr: "Cuisiner", es: ["cocinar"] },
+  { fr: "Nettoyer", es: ["limpiar"] },
+  { fr: "Jouir", es: ["disfrutar"] },
+  { fr: "Poser", es: ["colocar"] },
+  { fr: "Éteindre", es: ["apagar"] },
+  { fr: "Allumer", es: ["encender"] },
+  { fr: "Gagner", es: ["ganar"] },
+  { fr: "Perdre", es: ["perder"] },
+  { fr: "Essayer", es: ["intentar", "probar"] },
+  { fr: "Toucher", es: ["tocar"] },
+  { fr: "Se souvenir", es: ["recordar"] },
+  { fr: "Oublier", es: ["olvidar"] },
+  { fr: "Rire", es: ["reír"] },
+  { fr: "Pleurer", es: ["llorar"] },
+  { fr: "Souffrir", es: ["sufrir"] },
+  { fr: "Se dépêcher", es: ["apurarse"] },
+  { fr: "Attendre", es: ["esperar"] },
+  { fr: "Changer", es: ["cambiar"] },
+  { fr: "Choisir", es: ["escoger", "elegir"] },
+  { fr: "Cacher", es: ["esconder"] },
+  { fr: "Décider", es: ["decidir"] },
+  { fr: "Préparer", es: ["preparar"] },
+  { fr: "Inviter", es: ["invitar"] },
+  { fr: "Réveiller", es: ["despertar"] },
+  { fr: "Habiter", es: ["vivir"] },
+  { fr: "Acheter", es: ["comprar"] },
+  { fr: "Vendre", es: ["vender"] },
+  { fr: "Envoyer", es: ["enviar"] },
+  { fr: "Recevoir", es: ["recibir"] },
+  { fr: "Payer", es: ["pagar"] },
+  { fr: "Réparer", es: ["reparar"] },
+  { fr: "Casser", es: ["romper"] },
+  { fr: "Tirer", es: ["tirar"] },
+  { fr: "Pousser", es: ["empujar"] },
+  { fr: "Attraper", es: ["atrapar"] },
+  { fr: "Lancer", es: ["lanzar"] },
+  { fr: "Frapper", es: ["golpear"] },
+  { fr: "Pleuvoir", es: ["llover"] },
+  { fr: "Neiger", es: ["nevar"] },
+  { fr: "Briller", es: ["brillar"] },
+  { fr: "Grandir", es: ["crecer"] },
+  { fr: "Maigrir", es: ["adelgazar"] },
+  { fr: "Grossir", es: ["engordar"] },
+  { fr: "Entrainer", es: ["entrenar"] },
+  { fr: "Réussir", es: ["aprobar", "conseguir"] },
+  { fr: "Échouer", es: ["fallar"] },
+  { fr: "Protéger", es: ["proteger"] },
+  { fr: "Défendre", es: ["defender"] },
+  { fr: "Attacher", es: ["atar"] },
+  { fr: "Libérer", es: ["liberar"] },
+  { fr: "Tomber amoureux", es: ["enamorarse"] },
+  { fr: "Se marier", es: ["casarse"] },
+  { fr: "Se divorcer", es: ["divorciarse"] },
+  { fr: "Adorer", es: ["adorar"] },
+  { fr: "Détester", es: ["odiar"] },
+  { fr: "Craindre", es: ["temer"] },
+  { fr: "Espérer", es: ["esperar"] },
+  { fr: "Désirer", es: ["desear"] },
+  { fr: "Regretter", es: ["arrepentirse"] },
+  { fr: "S’amuser", es: ["divertirse"] },
+  { fr: "Se fâcher", es: ["enojarse"] },
+  { fr: "Se calmer", es: ["calmarse"] },
+  { fr: "S’inquiéter", es: ["preocuparse"] },
+  { fr: "S’entraîner", es: ["entrenarse"] },
+  { fr: "Soumettre", es: ["someter"] },
+  { fr: "Exiger", es: ["exigir"] },
+  { fr: "Préférer", es: ["preferir"] },
+  { fr: "Considérer", es: ["considerar"] },
+  { fr: "Supporter", es: ["soportar"] },
+  { fr: "Affirmer", es: ["afirmar"] },
+  { fr: "Nier", es: ["negar"] },
+  { fr: "Admettre", es: ["admitir"] },
+  { fr: "Refuser", es: ["rechazar"] },
+  { fr: "Se plaindre", es: ["quejarse"] },
+  { fr: "Se tromper", es: ["equivocarse"] },
+  { fr: "Blesser", es: ["herir"] },
+  { fr: "Soigner", es: ["cuidar"] },
+  { fr: "Compter", es: ["contar"] },
+  { fr: "Mesurer", es: ["medir"] },
+  { fr: "Peser", es: ["pesar"] },
+  { fr: "Tester", es: ["probar"] },
+  { fr: "Examiner", es: ["examinar"] },
+  { fr: "Décrire", es: ["describir"] },
+  { fr: "Expliquer", es: ["explicar"] },
+  { fr: "Démontrer", es: ["demostrar"] },
+  { fr: "Proposer", es: ["proponer"] },
+  { fr: "Accepter", es: ["aceptar"] },
+  { fr: "Refuser", es: ["rechazar"] },
+  { fr: "Annoncer", es: ["anunciar"] },
+  { fr: "Prévenir", es: ["prevenir"] },
+  { fr: "Alerter", es: ["alertar"] },
+  { fr: "Remarquer", es: ["notar", "observar"] },
+  { fr: "Observer", es: ["observar"] },
+  { fr: "Organiser", es: ["organizar"] },
+  { fr: "Planifier", es: ["planificar"] },
+  { fr: "Réfléchir", es: ["reflexionar"] },
+  { fr: "Imaginer", es: ["imaginar"] },
+  { fr: "Inventer", es: ["inventar"] },
+  { fr: "Créer", es: ["crear"] },
+  { fr: "Produire", es: ["producir"] },
+  { fr: "Construire", es: ["construir"] },
+  { fr: "Détruire", es: ["destruir"] },
+  { fr: "Fabriquer", es: ["fabricar"] },
+  { fr: "Transformer", es: ["transformar"] },
+  { fr: "Modifier", es: ["modificar"] },
+  { fr: "Ajouter", es: ["agregar"] },
+  { fr: "Retirer", es: ["quitar"] },
+  { fr: "Supprimer", es: ["eliminar"] },
+  { fr: "Garder", es: ["guardar"] },
+  { fr: "Permettre", es: ["permitir"] },
+  { fr: "Interdire", es: ["prohibir"] },
+  { fr: "Autoriser", es: ["autorizar"] },
+  { fr: "Obliger", es: ["obligar"] },
+  { fr: "Forcer", es: ["forzar"] },
+  { fr: "Aider", es: ["ayudar"] },
+  { fr: "Assister", es: ["asistir"] },
+  { fr: "Encourager", es: ["animar", "alentar"] },
+  { fr: "Intervenir", es: ["intervenir"] },
+  { fr: "Se battre", es: ["pelearse", "luchar"] },
+  { fr: "Combattre", es: ["combatir"] },
+  { fr: "Attaquer", es: ["atacar"] },
+  { fr: "Menacer", es: ["amenazar"] },
+  { fr: "Trahir", es: ["traicionar"] },
+  { fr: "Mentir", es: ["mentir"] },
+  { fr: "Avouer", es: ["confesar", "admitir"] },
+  { fr: "Découvrir", es: ["descubrir"] },
+  { fr: "Explorer", es: ["explorar"] },
+  { fr: "Voyager", es: ["viajar"] },
+  { fr: "Déménager", es: ["mudarse"] },
+  { fr: "Emprunter", es: ["tomar prestado"] },
+  { fr: "Prêter", es: ["prestar"] },
+  { fr: "Échanger", es: ["intercambiar"] },
+  { fr: "Partager", es: ["compartir"] },
+  { fr: "Accueillir", es: ["acoger"] },
+  { fr: "Déposer", es: ["depositar"] },
+  { fr: "Soulever", es: ["levantar"] },
+  { fr: "Baisser", es: ["bajar"] },
+  { fr: "Tourner", es: ["girar"] },
+  { fr: "Plier", es: ["doblar"] },
+  { fr: "Découper", es: ["recortar"] },
+  { fr: "Enrouler", es: ["enrollar"] },
+  { fr: "Dérouler", es: ["desenrollar"] },
+  { fr: "Avancer", es: ["avanzar"] },
+  { fr: "Reculer", es: ["retroceder"] },
+  { fr: "Sauter", es: ["saltar"] },
+  { fr: "Bondir", es: ["brincar"] },
+  { fr: "Glisser", es: ["deslizar"] },
+  { fr: "Lever", es: ["levantar"] },
+  { fr: "Abaisser", es: ["bajar"] },
+  { fr: "Taper", es: ["golpear"] },
+  { fr: "Secouer", es: ["sacudir"] },
+  { fr: "Balayer", es: ["barrer"] },
+  { fr: "Brosser", es: ["cepillar"] },
+  { fr: "Laver", es: ["lavar"] },
+  { fr: "Essuyer", es: ["secar"] },
+  { fr: "Peigner", es: ["peinar"] },
+  { fr: "Coiffer", es: ["peinar"] },
+  { fr: "Habiller", es: ["vestir"] },
+  { fr: "Déshabiller", es: ["desvestir"] }
+];
+
+
+
+let currentIndex;
+
+function normalize(str) {
+  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+}
+
+function showCard() {
+  if (words.length === 0) {
+    document.getElementById("card").textContent = "🎉 Tous les mots sont appris !";
+    return;
+  }
+
+  currentIndex = Math.floor(Math.random() * words.length);
+  let word = words[currentIndex];
+
+  // Préparer la traduction espagnole comme chaîne
+  let spanishTranslation = Array.isArray(word.es) ? word.es.join(" / ") : word.es;
+
+  document.getElementById("card").innerHTML = `
+    <span class="tooltip">
+      ${word.fr}
+      <span class="tooltiptext">${spanishTranslation}</span>
+    </span>
+  `;
+
+  // Détection mobile pour clic
+  const tooltip = document.querySelector(".tooltip");
+  if (window.matchMedia("(hover: none) and (pointer: coarse)").matches) {
+    tooltip.addEventListener("click", () => {
+      tooltip.classList.toggle("show");
+    });
+  }
+}
+
+function checkAnswer() {
+  if (words.length === 0) return;
+
+  let user = normalize(document.getElementById("answer").value.trim());
+  let correct = Array.isArray(words[currentIndex].es) ? words[currentIndex].es : [words[currentIndex].es];
+
+  let isCorrect = correct.some(c => normalize(c) === user);
+
+  if (isCorrect) {
+    document.getElementById("feedback").textContent = "✅ Bravo !";
+    words.splice(currentIndex, 1);
+  } else {
+    document.getElementById("feedback").textContent = "❌ Mauvaise réponse";
+  }
+
+  document.getElementById("answer").value = "";
+  showCard();
+}
+
+
+// Initialisation
+showCard();
+</script>
+</body>
+</html>
