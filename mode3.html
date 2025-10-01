@@ -1,35 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Flashcards FR ⇄ ES</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flashcards FR ⇄ ES</title>
 
-		<link rel="stylesheet" href="style.css" />
-		<button onclick="window.location='index.html'">Page d'accueil</button>
-    
-		<h1>Flashcards FR ⇄ ES</h1>
-	</head>
-	<body>
-    <h1>
-		<div id="card"></div>
+    <link rel="stylesheet" href="style.css" />
+    <button onclick="window.location='index.html'">Page d'accueil</button>
+    <h1>Flashcards FR ⇄ ES</h1>
+  </head>
+  <body>
+    <h1> <!-- ✅ h1 refermé correctement -->
 
-		<input type="text" id="answer" placeholder="Ta réponse ici" />
-		<button onclick="checkAnswer()">Vérifier</button>
+    <div id="card"></div>
 
-		<div id="feedback"></div>
+    <input type="text" id="answer" placeholder="Ta réponse ici" />
+    <button onclick="checkAnswer()">Vérifier</button>
 
-		<script>
-			    // ✅ Entrée = bouton
-			    document.getElementById("answer").addEventListener("keypress", function(event) {
-			      if (event.key === "Enter") {
-			        event.preventDefault();
-			        checkAnswer();
-			      }
-			    });
+    <div id="feedback"></div>
+    <div id="counter"></div>
 
+    <script>
+      // ✅ Entrée = bouton
+      document.getElementById("answer").addEventListener("keypress", function (event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          checkAnswer();
+        }
+      });
 
-			let words = [
+      let words = [
 			{ fr: "Être", es: ["Ser", "Estar"] },
 			{ fr: "Avoir", es: ["Tener"] },
 			{ fr: "Aller", es: ["Ir"] },
@@ -44,7 +44,6 @@
 			{ fr: "Mettre", es: ["Poner"] },
 			{ fr: "Parler", es: ["Hablar"] },
 			{ fr: "Aimer", es: ["Amar", "Gustar"] },
-			{ fr: "Passer", es: ["Pasar"] },
 			{ fr: "Penser", es: ["Pensar"] },
 			{ fr: "Donner", es: ["Dar"] },
 			{ fr: "Trouver", es: ["Encontrar"] },
@@ -91,8 +90,8 @@
 			{ fr: "Profiter", es: ["Disfrutar"] },
 			{ fr: "Poser", es: ["Colocar"] },
 			{ fr: "Éteindre", es: ["Apagar"] },
-			{ fr: "Allumer", es: ["Encender"] },
-			{ fr: "Gagner", es: ["Ganar"] },
+			{ fr: "Allumer (Lumière/Appareil)", es: ["Encender"] },
+			{ fr: "Gagner ", es: ["Ganar"] },
 			{ fr: "Perdre", es: ["Perder"] },
 			{ fr: "Essayer", es: ["Intentar", "Probar"] },
 			{ fr: "Toucher", es: ["Tocar"] },
@@ -118,7 +117,7 @@
 			{ fr: "Payer", es: ["Pagar"] },
 			{ fr: "Réparer", es: ["Reparar"] },
 			{ fr: "Casser", es: ["Romper"] },
-			{ fr: "Tirer", es: ["Tirar"] },
+			{ fr: "Tirer (Sens propre)", es: ["Tirar"] },
 			{ fr: "Pousser", es: ["Empujar"] },
 			{ fr: "Attraper", es: ["Atrapar"] },
 			{ fr: "Lancer", es: ["Lanzar"] },
@@ -176,7 +175,7 @@
 			{ fr: "Accepter", es: ["Aceptar"] },
 			{ fr: "Refuser", es: ["Rechazar"] },
 			{ fr: "Annoncer", es: ["Anunciar"] },
-			{ fr: "Prévenir", es: ["Prevenir"] },
+			{ fr: "Prévenir", es: ["Avisar"] },
 			{ fr: "Alerter", es: ["Alertar"] },
 			{ fr: "Remarquer", es: ["Notar", "Observar"] },
 			{ fr: "Observer", es: ["Observar"] },
@@ -194,7 +193,7 @@
 			{ fr: "Modifier", es: ["Modificar"] },
 			{ fr: "Ajouter", es: ["Agregar"] },
 			{ fr: "Retirer", es: ["Quitar"] },
-			{ fr: "Supprimer", es: ["Eliminar"] },
+			
 			{ fr: "Garder", es: ["Guardar"] },
 			{ fr: "Permettre", es: ["Permitir"] },
 			{ fr: "Interdire", es: ["Prohibir"] },
@@ -228,16 +227,17 @@
 			{ fr: "Devenir addict", es: ["Enganchar"] },
 			{ fr: "Faire confiance", es: ["Fiar"] },
 			{ fr: "Se droguer", es: ["Colocarse"] },
-   			{ fr: "Se trouver", es: ["Colocarse"] },
+   			{ fr: "Trouver du travail", es: ["Colocarse"] },
 			{ fr: "Attendre", es: ["Esperar"] },
-			{ fr: "Échanger", es: ["Canjear"] },
-			{ fr: "Rentrer", es: ["Caber"] },
+			{ fr: "Échanger (Troquer)", es: ["Canjear"] },
+			{ fr: "Rentrer (Un objet)", es: ["Caber"] },
 			{ fr: "Comprendre", es: ["Enterarse"] },
 			{ fr: "Réaliser", es: ["Enterarse", "Lograr"] },
 			{ fr: "Acquérir connaissances", es: ["Enterarse"] },
 			{ fr: "Cacher", es: ["Esconder", "Ocultar"] },
 			{ fr: "Tromper", es: ["Engañar"] },
-			{ fr: "Se raser", es: ["Depilarse"] },
+			{ fr: "S'épiler", es: ["Depilarse"] },
+			{ fr: "Se raser", es: ["Afeitar"] },
     		{ fr: "Dénoncer", es: ["Delatar"] },
 			{ fr: "Mettre", es: ["Echar"] },
 			{ fr: "Jeter", es: ["Echar"] },
@@ -251,8 +251,8 @@
 			{ fr: "Trouver", es: ["Hallar"] },
 			{ fr: "Empêcher", es: ["Impedir"] },
 			{ fr: "Juger", es: ["Juzgar"] },
-			{ fr: "Ordonner", es: ["Mandar"] },
-			{ fr: "Diriger", es: ["Mandar"] },
+			
+			{ fr: "Diriger (Ordonner)", es: ["Mandar"] },
 			{ fr: "Pisser", es: ["Mear"] },
 			{ fr: "Échanger", es: ["Intercambiar"] },
 			{ fr: "Partager", es: ["Compartir"] },
@@ -276,7 +276,7 @@
 			{ fr: "Réussir", es: ["Aprobar", "Conseguir"] },
 			{ fr: "Approuver", es: ["Aprobar"] },
 			{ fr: "Déserseperer", es: ["Agobiar"] },
-			{ fr: "Fatiguer", es: ["Agotar"] },
+			{ fr: "Crever (Fatiguer)", es: ["Agotar"] },
 			{ fr: "Se dépécher", es: ["Apurarse"] },
 			{ fr: "Intimider", es: ["Amedrentar"] },
 			{ fr: "Faire plaisir", es: ["Agradar"] },
@@ -286,7 +286,7 @@
 			{ fr: "Presser", es: ["Apretar"] },
 			{ fr: "Se dépêcher)", es: ["Apretar"] },
 			{ fr: "Poignarder", es: ["Apuñalar"] },
-			{ fr: "Hauteur", es: ["Altura"] },
+			{ fr: "Lâcher", es: ["Soltar"] },
 			{ fr: "Étendre", es: ["Ampliar"] },
 			{ fr: "S’isoler", es: ["Aislarse"] },
 			{ fr: "Faire vite (AL)", es: ["Apretar"] },
@@ -294,20 +294,21 @@
 			{ fr: "Abaisser", es: ["Bajar"] },
 			{ fr: "Taper", es: ["Golpear"] },
 			{ fr: "Secouer", es: ["Sacudir"] },
-			{ fr: "Supprimer", es: ["Bojar"] },
+			{ fr: "Effacer", es: ["Bojar"] },
+			{ fr: "Supprimer", es: ["Eliminar"] },
 			{ fr: "Balayer", es: ["Barrer"] },
 			{ fr: "Crier", es: ["Chillar", "Gritar"] },
 			{ fr: "Brosser", es: ["Cepillar"] },
 			{ fr: "Punir", es: ["Castigar"] },
 			{ fr: "Vérifier", es: ["Comprobar"] },
-			{ fr: "Gagner", es: ["Cobrar"] },
+			{ fr: "Gagner (argent)", es: ["Cobrar"] },
 			{ fr: "Dîner", es: ["Cenar"] },
 			{ fr: "Confronter", es: ["Carear"] },
 			{ fr: "Se marier", es: ["Casarse"] },
 			{ fr: "Travailler", es: ["Currar"] },
 			{ fr: "S’infiltrer", es: ["Colarse "] },
 			{ fr: "Laver", es: ["Lavar"] },
-			{ fr: "Essuyer", es: ["Secar"] },
+			{ fr: "Essuyer, Sécher", es: ["Secar"] },
 			{ fr: "Peigner", es: ["Peinar"] },
 			{ fr: "Coiffer", es: ["Peinar"] },
 			{ fr: "S'habiller", es: ["Vestir"] },
@@ -326,65 +327,72 @@
 			{ fr: "Éplucher", es: ["Pelar "] },
     		{ fr: "Se battre, Se disputer", es: ["Pelearse"] },
 			{ fr: "Arrêter", es: ["Parar"] },
-    		{ fr: "Attraper 🔥", es: ["Pillar"] }];
+    		{ fr: "Attraper (Argo)", es: ["Pillar"] }];
 
-			let currentIndex;
+      let currentIndex;
 
-			function normalize(str) {
-			  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-			}
+      function updateCounter() {
+        document.getElementById("counter").textContent =
+          `Mots restants : ${words.length}`;
+      }
 
-			function showCard() {
-			  if (words.length === 0) {
-			    document.getElementById("card").textContent = "🎉 Tous les mots sont appris !";
-			    return;
-			  }
+      function normalize(str) {
+        return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+      }
 
-			  currentIndex = Math.floor(Math.random() * words.length);
-			  let word = words[currentIndex];
+      function showCard() {
+        updateCounter();
 
-			  // Préparer la traduction espagnole comme chaîne
-			  let spanishTranslation = Array.isArray(word.es) ? word.es.join(" / ") : word.es;
+        if (words.length === 0) {
+          document.getElementById("card").textContent = "🎉 Tous les mots sont appris !";
+          document.getElementById("counter").textContent = "✔️ Aucun mot restant";
+          return;
+        }
 
-			  document.getElementById("card").innerHTML = `
-			    <span class="tooltip">
-			      ${word.fr}
-			      <span class="tooltiptext">${spanishTranslation}</span>
-			    </span>
-			  `;
+        currentIndex = Math.floor(Math.random() * words.length);
+        let word = words[currentIndex];
 
-			  // Détection mobile pour clic
-			  const tooltip = document.querySelector(".tooltip");
-			  if (window.matchMedia("(hover: none) and (pointer: coarse)").matches) {
-			    tooltip.addEventListener("click", () => {
-			      tooltip.classList.toggle("show");
-			    });
-			  }
-			}
+        let spanishTranslation = Array.isArray(word.es) ? word.es.join(" / ") : word.es;
 
-			function checkAnswer() {
-			  if (words.length === 0) return;
+        document.getElementById("card").innerHTML = `
+          <span class="tooltip">
+            ${word.fr}
+            <span class="tooltiptext">${spanishTranslation}</span>
+          </span>
+        `;
 
-			  let user = normalize(document.getElementById("answer").value.trim());
-			  let correct = Array.isArray(words[currentIndex].es) ? words[currentIndex].es : [words[currentIndex].es];
+        const tooltip = document.querySelector(".tooltip");
+        if (window.matchMedia("(hover: none) and (pointer: coarse)").matches) {
+          tooltip.addEventListener("click", () => {
+            tooltip.classList.toggle("show");
+          });
+        }
+      }
 
-			  let isCorrect = correct.some(c => normalize(c) === user);
+      function checkAnswer() {
+        if (words.length === 0) return;
 
-			  if (isCorrect) {
-			    document.getElementById("feedback").textContent = "✅ Bravo !";
-			    words.splice(currentIndex, 1);
-			  } else {
-					document.getElementById("feedback").textContent ="❌ Mauvaise réponse. " + words[currentIndex].es;
-								
-			  }
+        let user = normalize(document.getElementById("answer").value.trim());
+        let correct = Array.isArray(words[currentIndex].es)
+          ? words[currentIndex].es
+          : [words[currentIndex].es];
 
-			  document.getElementById("answer").value = "";
-			  showCard();
-			}
+        let isCorrect = correct.some((c) => normalize(c) === user);
 
+        if (isCorrect) {
+          document.getElementById("feedback").textContent = "✅ Bravo !";
+          words.splice(currentIndex, 1);
+        } else {
+          document.getElementById("feedback").textContent =
+            "❌ Mauvaise réponse. " + words[currentIndex].es;
+        }
 
-			// Initialisation
-			showCard();
-		</script>
-	</body>
+        document.getElementById("answer").value = "";
+        showCard();
+      }
+
+      // Initialisation
+      showCard();
+    </script>
+  </body>
 </html>
